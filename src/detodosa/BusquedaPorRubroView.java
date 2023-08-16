@@ -12,12 +12,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class BusquedaPorRubroView extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo = new DefaultTableModel(){
-    public boolean isCellEditable(int f, int c){
-    return false;
-    }
-};  
-    
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
+
     /**
      * Creates new form BusquedaPorRubro
      */
@@ -52,6 +53,11 @@ private DefaultTableModel modelo = new DefaultTableModel(){
 
         jLabel2.setText("Elija rubro");
 
+        jcbCategoria.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jcbCategoriaItemStateChanged(evt);
+            }
+        });
         jcbCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jcbCategoriaMouseClicked(evt);
@@ -130,23 +136,20 @@ private DefaultTableModel modelo = new DefaultTableModel(){
 
     private void jcbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCategoriaActionPerformed
         // TODO add your handling code here:
-        
-                borrarFilas();
-        for(Producto prod:Menu.listaProductos){
-                   if(prod.getRubro().equals(jcbCategoria.getSelectedItem())){
+        borrarFilas();
+        for (Producto prod : Menu.listaProductos) {
+            if (prod.getRubro().equals((Categoria) jcbCategoria.getSelectedItem())) {
                 modelo.addRow(new Object[]{
                     prod.getCodigo(),
                     prod.getDescripcion(),
                     prod.getPrecio(),
-                    prod.getStock(),
-                });
+                    prod.getStock(),});
             }
         }                 //
     }//GEN-LAST:event_jcbCategoriaActionPerformed
 
     private void jcbCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbCategoriaMouseClicked
         // TODO add your handling code here:
-  
     }//GEN-LAST:event_jcbCategoriaMouseClicked
 
     private void jcbCategoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbCategoriaMouseReleased
@@ -157,6 +160,10 @@ private DefaultTableModel modelo = new DefaultTableModel(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jcbCategoriaPropertyChange
 
+    private void jcbCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jcbCategoriaItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCategoriaItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -166,23 +173,28 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables
 
-    private void armarCabecera(){
-    //modelo.addColumn("Categoria");
-    modelo.addColumn("Codigo");
-    modelo.addColumn("Descripcion");
-    modelo.addColumn("Precio");
-    modelo.addColumn("Stock");
-    jtProductos.setModel(modelo);
-}
-  private void cargarCombo(){
-     jcbCategoria.addItem(Categoria.COMESTIBLE);
-     jcbCategoria.addItem(Categoria.LIMPIEZA);
-     jcbCategoria.addItem(Categoria.PERFUMERIA);
-  }
-  private void borrarFilas(){
-    int filas= jtProductos.getRowCount()-1;
-    for(int f=filas;f>=0;f--){
-        modelo.removeRow(f);
+    private void armarCabecera() {
+        //modelo.addColumn("Categoria");
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Stock");
+        jtProductos.setModel(modelo);
     }
-}
+
+    private void cargarCombo() {
+        jcbCategoria.addItem(Categoria.COMESTIBLE);
+        jcbCategoria.addItem(Categoria.LIMPIEZA);
+        jcbCategoria.addItem(Categoria.PERFUMERIA);
+    }
+
+    private void borrarFilas() {
+//    int filas= jtProductos.getRowCount()-1;
+//    for(int f=filas;f>=0;f--){
+//        modelo.removeRow(f);
+        while (modelo.getRowCount() > 0) {
+            int cantidadFilas = modelo.getRowCount();
+            modelo.removeRow(cantidadFilas - 1);
+        }
+    }
 }
