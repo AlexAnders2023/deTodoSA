@@ -5,6 +5,7 @@
  */
 package detodosa;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -12,11 +13,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Usuario
  */
 public class BusquedaPorPrecioView extends javax.swing.JInternalFrame {
-private DefaultTableModel modelo = new DefaultTableModel(){
-    public boolean isCellEditable(int f, int c){
-    return false;
-    }
-};  
+
+    private DefaultTableModel modelo = new DefaultTableModel() {
+        public boolean isCellEditable(int f, int c) {
+            return false;
+        }
+    };
+
     /**
      * Creates new form BusquedaPorPrecio
      */
@@ -61,6 +64,12 @@ private DefaultTableModel modelo = new DefaultTableModel(){
         jtPrecio1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jtPrecio1KeyReleased(evt);
+            }
+        });
+
+        jtPrecio2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtPrecio2KeyReleased(evt);
             }
         });
 
@@ -120,25 +129,79 @@ private DefaultTableModel modelo = new DefaultTableModel(){
 
     private void jtPrecio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtPrecio1ActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jtPrecio1ActionPerformed
 
     private void jtPrecio1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPrecio1KeyReleased
         // TODO add your handling code here:
-//         borrarFilas();
-        for(Producto prod:Menu.listaProductos){
-//            double jtPrecio1=0.0;
-//            double jtPrecio2=0.0;
-//        if(jtPrecio1<0)||(jtPrecio2<1000){
-            modelo.addRow(new Object[]{
-            prod.getCodigo(),
-            prod.getDescripcion(),
-            prod.getPrecio(),
-            prod.getStock(),
-        });
+        borrarFilas();
+
+        try {
+
+            double Precio1 = 0.0;
+            double Precio2 = 0.0;
+            if (jtPrecio1.getText().isEmpty() == false) {
+                Precio1 = Double.parseDouble(this.jtPrecio1.getText());
+            }
+
+            if (jtPrecio2.getText().isEmpty() != true) {
+                Precio2 = Double.parseDouble(this.jtPrecio2.getText());
+            }
+
+            double max = Math.max(Precio2, Precio1);
+            double min = Math.min(Precio2, Precio1);
+
+            for (Producto prod : Menu.listaProductos) {
+                double precioF = prod.getPrecio();
+                if ((precioF >= min) && (precioF <= max)) {
+                    modelo.addRow(new Object[]{
+                        prod.getCodigo(),
+                        prod.getDescripcion(),
+                        prod.getPrecio(),
+                        prod.getStock(),});
+                }
+            }
+        } catch (NumberFormatException e) {
+            // no deberia salir nada
+            JOptionPane.showMessageDialog(this, "Solo ingrese valores numericos");
+
         }
-//        }
     }//GEN-LAST:event_jtPrecio1KeyReleased
+
+    private void jtPrecio2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtPrecio2KeyReleased
+        borrarFilas();
+
+        try {
+
+            double Precio1 = 0.0;
+            double Precio2 = 0.0;
+            if (jtPrecio1.getText().isEmpty() == false) {
+                Precio1 = Double.parseDouble(this.jtPrecio1.getText());
+            }
+
+            if (jtPrecio2.getText().isEmpty() != true) {
+                Precio2 = Double.parseDouble(this.jtPrecio2.getText());
+            }
+
+            double max = Math.max(Precio2, Precio1);
+            double min = Math.min(Precio2, Precio1);
+
+            for (Producto prod : Menu.listaProductos) {
+                double precioF = prod.getPrecio();
+                if ((precioF >= min) && (precioF <= max)) {
+                    modelo.addRow(new Object[]{
+                        prod.getCodigo(),
+                        prod.getDescripcion(),
+                        prod.getPrecio(),
+                        prod.getStock(),});
+                }
+            }
+        } catch (NumberFormatException e) {
+            // no deberia salir nada
+            JOptionPane.showMessageDialog(this, "Solo ingrese valores numericos");
+
+        }
+    }//GEN-LAST:event_jtPrecio2KeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -150,17 +213,18 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     private javax.swing.JTextField jtPrecio2;
     private javax.swing.JTable jtProductos;
     // End of variables declaration//GEN-END:variables
-private void armarCabecera(){
-    modelo.addColumn("Codigo");
-    modelo.addColumn("Descripcion");
-    modelo.addColumn("Precio");
-    modelo.addColumn("Stock");
-    jtProductos.setModel(modelo);
-}
-private void borrarFilas(){
-    int filas= jtProductos.getRowCount()-1;
-    for(int f=filas;f>=0;f--){
-        modelo.removeRow(f);
+private void armarCabecera() {
+        modelo.addColumn("Codigo");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Precio");
+        modelo.addColumn("Stock");
+        jtProductos.setModel(modelo);
     }
-}
+
+    private void borrarFilas() {
+        int filas = jtProductos.getRowCount() - 1;
+        for (int f = filas; f >= 0; f--) {
+            modelo.removeRow(f);
+        }
+    }
 }
