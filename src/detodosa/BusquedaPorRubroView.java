@@ -52,9 +52,22 @@ private DefaultTableModel modelo = new DefaultTableModel(){
 
         jLabel2.setText("Elija rubro");
 
+        jcbCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jcbCategoriaMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jcbCategoriaMouseReleased(evt);
+            }
+        });
         jcbCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbCategoriaActionPerformed(evt);
+            }
+        });
+        jcbCategoria.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jcbCategoriaPropertyChange(evt);
             }
         });
         jcbCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -105,7 +118,7 @@ private DefaultTableModel modelo = new DefaultTableModel(){
                     .addComponent(jcbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,25 +126,36 @@ private DefaultTableModel modelo = new DefaultTableModel(){
 
     private void jcbCategoriaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jcbCategoriaKeyReleased
         // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCategoriaKeyReleased
+
+    private void jcbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCategoriaActionPerformed
+        // TODO add your handling code here:
+        
                 borrarFilas();
-                
         for(Producto prod:Menu.listaProductos){
-                   if(prod.getRubro().equals(prod.getRubro())){
+                   if(prod.getRubro().equals(jcbCategoria.getSelectedItem())){
                 modelo.addRow(new Object[]{
-                    prod.getRubro(),
                     prod.getCodigo(),
                     prod.getDescripcion(),
                     prod.getPrecio(),
                     prod.getStock(),
                 });
-
             }
         }                 //
-    }//GEN-LAST:event_jcbCategoriaKeyReleased
-
-    private void jcbCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCategoriaActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_jcbCategoriaActionPerformed
+
+    private void jcbCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbCategoriaMouseClicked
+        // TODO add your handling code here:
+  
+    }//GEN-LAST:event_jcbCategoriaMouseClicked
+
+    private void jcbCategoriaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jcbCategoriaMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCategoriaMouseReleased
+
+    private void jcbCategoriaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jcbCategoriaPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCategoriaPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -143,7 +167,7 @@ private DefaultTableModel modelo = new DefaultTableModel(){
     // End of variables declaration//GEN-END:variables
 
     private void armarCabecera(){
-    modelo.addColumn("Categoria");
+    //modelo.addColumn("Categoria");
     modelo.addColumn("Codigo");
     modelo.addColumn("Descripcion");
     modelo.addColumn("Precio");
