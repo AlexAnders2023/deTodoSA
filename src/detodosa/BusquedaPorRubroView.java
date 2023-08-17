@@ -189,12 +189,12 @@ public class BusquedaPorRubroView extends javax.swing.JInternalFrame {
     }
 
     private void borrarFilas() {
-//    int filas= jtProductos.getRowCount()-1;
-//    for(int f=filas;f>=0;f--){
-//        modelo.removeRow(f);
-        while (modelo.getRowCount() > 0) {
-            int cantidadFilas = modelo.getRowCount();
-            modelo.removeRow(cantidadFilas - 1);
+    int filas= modelo.getRowCount()-1;
+    for(int f=filas;f>=0;f--){
+        modelo.removeRow(f);
+   //     while (modelo.getRowCount() > 0) {
+   //         int cantidadFilas = modelo.getRowCount();
+  //          modelo.removeRow(cantidadFilas - 1);
         }
     }
 }
